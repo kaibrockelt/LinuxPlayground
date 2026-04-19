@@ -266,3 +266,14 @@ These are images derived from this template (or similar enough to this template)
 - [Homer](https://github.com/bketelsen/homer/)
 - [Amy OS](https://github.com/astrovm/amyos)
 - [VeneOS](https://github.com/Venefilyn/veneos)
+
+
+## pulling my fancy image
+```
+# setting the pointers to this image
+# Syntax: bootc switch <registry>/<image>:<tag>
+sudo bootc switch ghcr.io/kaibrockelt/linuxplayground:latest
+
+# updating to latest version:
+sudo bootc upgrade
+```
