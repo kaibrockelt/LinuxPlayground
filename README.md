@@ -1,6 +1,6 @@
 # HOLD UP!
 This is not the official uBlue image. Yes the readme is the same, but please make sure to go to the source at https://github.com/ublue-os/image-template - the repository you look at right now is nothing but a playground for learning. Installing stuff from here most likely will break whatever you do.
-
+.
 
 # image-template
 
