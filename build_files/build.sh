@@ -12,6 +12,11 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y tmux 
 
+## kai custom
+dnf5 install -y podman-docker
+dnf5 install -y waydroid
+
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
@@ -22,3 +27,4 @@ dnf5 install -y tmux
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+systemctl enable waydroid-container.service
