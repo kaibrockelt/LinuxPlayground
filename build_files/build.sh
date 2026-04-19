@@ -13,10 +13,12 @@ set -ouex pipefail
 dnf5 install -y tmux 
 
 ## kai custom
+#podman docker hotlink
 dnf5 install -y podman-docker
+systemctl enable podman.socket 
 #waydroid 
 #dnf5 install -y waydroid
-
+#systemctl enable waydroid-container.service
 
 # Use a COPR Example:
 #
@@ -26,6 +28,3 @@ dnf5 install -y podman-docker
 # dnf5 -y copr disable ublue-os/staging
 
 #### Example for enabling a System Unit File
-
-systemctl enable podman.socket
-systemctl enable waydroid-container.service
