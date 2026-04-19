@@ -36,11 +36,15 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh
 
 ## homeserver CA built in.
-# 1. Root-Zertifikat ins Image kopieren
+# 1. copy root ca to the image
 COPY certs/caddy-horst-root.crt /etc/pki/ca-trust/source/anchors/caddy-horst-root.crt
 
-# 2. Die CA-Datenbank im Image aktualisieren
+# 2. update CA-database inside of the Image
 RUN update-ca-trust
+
+# 3. make firefox accept my certs (chrome based browsers like it without)
+RUN mkdir -p /usr/lib64/firefox/distribution/
+COPY files/firefox/policies.json /usr/lib64/firefox/distribution/policies.json
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
