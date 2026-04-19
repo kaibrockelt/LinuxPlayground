@@ -14,7 +14,8 @@ dnf5 install -y tmux
 
 ## kai custom
 dnf5 install -y podman-docker
-dnf5 install -y waydroid
+#waydroid 
+#dnf5 install -y waydroid
 
 
 # Use a COPR Example:

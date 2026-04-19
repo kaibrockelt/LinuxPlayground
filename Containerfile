@@ -34,7 +34,13 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh
-    
+
+## homeserver CA built in.
+# 1. Root-Zertifikat ins Image kopieren
+COPY certs/caddy-horst-root.crt /etc/pki/ca-trust/source/anchors/caddy-horst-root.crt
+
+# 2. Die CA-Datenbank im Image aktualisieren
+RUN update-ca-trust
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
