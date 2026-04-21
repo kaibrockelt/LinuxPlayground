@@ -4,7 +4,7 @@
 
 CERT="/etc/pki/ca-trust/source/anchors/caddy-horst-root.crt"
 CERT_NAME="Caddy Local Authority"
-CERTUTIL="/home/linuxbrew/.linuxbrew/bin/certutil"
+CERTUTIL="/usr/bin/certutil"
 FF_DIR="$HOME/.var/app/org.mozilla.firefox/config/mozilla/firefox"
 
 [ -f "$CERT" ] || exit 0

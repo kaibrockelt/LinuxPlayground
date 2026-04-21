@@ -67,6 +67,16 @@ $CERTUTIL -D -n 'Caddy Local Authority' \
 ## Tools Installed
 - `brew install nss` → provides `certutil` at `/home/linuxbrew/.linuxbrew/bin/certutil`
 
+## Current Status (2026-04-21, ~23:16)
+
+- Firefox verhält sich korrekt ✓ (Cert manuell in beide Profile importiert als Sofort-Fix)
+- Bestätigt: `/usr/local/bin/firefox-flatpak-cert-import.sh` fehlt im laufenden System → Image ist älter als Commit `75e7f91`
+- Systemd user service schlägt mit EXEC 203 fehl (Script nicht gefunden)
+- **Fix committed & gepusht**:
+  - `build_files/build.sh`: `nss-tools` wird jetzt per RPM installiert → `certutil` unter `/usr/bin/certutil`
+  - `files/firefox/firefox-flatpak-cert-import.sh`: Pfad von brew-`certutil` auf `/usr/bin/certutil` geändert
+- **Nächster Schritt**: GitHub Actions Build abwarten → `sudo bootc upgrade` → reboot → prüfen ob Service sauber läuft
+
 ## Baked-in Solution (current state in image)
 
 ### Files added to repo

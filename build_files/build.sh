@@ -13,6 +13,9 @@ set -ouex pipefail
 dnf5 install -y tmux 
 
 ## kai custom
+# nss-tools: provides certutil for importing certs into Firefox/NSS databases
+dnf5 install -y nss-tools
+
 #podman docker hotlink
 dnf5 install -y podman-docker
 systemctl enable podman.socket 
