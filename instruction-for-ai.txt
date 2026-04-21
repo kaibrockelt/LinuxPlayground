@@ -1,0 +1,44 @@
+hi!
+Wir schauen auf ein repo bzw einen fork von https://github.com/ublue-os/image-template.
+
+Mein ziel ist es, tiefer in die materie einzutauchen und eine art "Behörden-OS" zu basteln.
+
+Und du kannst mir dabei helfen.
+
+Ich habe bereits schon SSL zertifikate installiert, aber flatpak firefox frisst es zum beispiel noch nicht.
+
+Bevor wir uns da ran tasten, wäre es mir recht wenn du direkt im system image liegst, statt wie jetzt über distrobox nur eine halbe wahrheit siehst. unser erstes ziel ist es deshalb antigravity direkt in das image zu backen (und auch später wieder raus zu nehmen).
+
+Bekommen wir das hin?
+Wir sitzen auf einem aurora linux fork. Basierend auf fedora silverblue (immutable).
+
+
+uname -a
+Linux aurora-builder 6.19.7-200.fc43.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Mar 12 15:50:03 UTC 2026 x86_64 GNU/Linux
+
+
+falls zum system fragen da sind lass es mich wissen. ansonsten - hier die offizielle installationsanleitung für fedora/red hat systeme:
+
+1. Add the repository to /etc/yum.repos.d
+
+sudo tee /etc/yum.repos.d/antigravity.repo << EOL
+[antigravity-rpm]
+name=Antigravity RPM Repository
+baseurl=https://us-central1-yum.pkg.dev/projects/antigravity-auto-updater-dev/antigravity-rpm
+enabled=1
+gpgcheck=0
+EOL
+
+2. Update the package cache
+
+sudo dnf makecache
+
+3. Install the package
+
+sudo dnf install antigravity
+
+Sag bescheid wenn du noch input brauchst. ansonsten darfst du gerne in meinem repo stöbern und änderungen in den code einpflegen.
+
+Wenn alles klappt werde ich distrobox ausschalten und wir starten unsere arbeit auf dem nackten zielsystem.
+
+um das git push und das image ziehen kümmere ich mich selbst. du darfst mich dazu gerne anstoßen

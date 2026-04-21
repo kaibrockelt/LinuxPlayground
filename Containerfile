@@ -45,6 +45,11 @@ RUN update-ca-trust
 # 3. make firefox accept my certs (chrome based browsers like it without)
 RUN mkdir -p /usr/lib64/firefox/distribution/
 COPY files/firefox/policies.json /usr/lib64/firefox/distribution/policies.json
+### ANTIGRAVITY
+COPY build_files/antigravity.repo /etc/yum.repos.d/antigravity.repo
+RUN dnf5 install -y antigravity && \
+    dnf5 clean all
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
