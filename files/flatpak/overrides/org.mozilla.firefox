@@ -1,0 +1,2 @@
+[Context]
+filesystems=/etc/pki/ca-trust/source/anchors:ro;

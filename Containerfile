@@ -45,10 +45,17 @@ RUN update-ca-trust
 # 3. make firefox accept my certs (chrome based browsers like it without)
 RUN mkdir -p /usr/lib64/firefox/distribution/
 COPY files/firefox/policies.json /usr/lib64/firefox/distribution/policies.json
+
+# 4. flatpak firefox: grant cert access + import via systemd user service
+COPY files/flatpak/overrides/org.mozilla.firefox /etc/flatpak/overrides/org.mozilla.firefox
+COPY files/firefox/firefox-flatpak-cert-import.sh /usr/local/bin/firefox-flatpak-cert-import.sh
+COPY files/firefox/firefox-flatpak-cert-import.service /usr/lib/systemd/user/firefox-flatpak-cert-import.service
+RUN chmod +x /usr/local/bin/firefox-flatpak-cert-import.sh && \
+    systemctl --global enable firefox-flatpak-cert-import.service
 ### ANTIGRAVITY
-COPY build_files/antigravity.repo /etc/yum.repos.d/antigravity.repo
-RUN dnf5 install -y antigravity && \
-    dnf5 clean all
+# COPY build_files/antigravity.repo /etc/yum.repos.d/antigravity.repo
+# RUN dnf5 install -y antigravity && \
+#    dnf5 clean all
 
 ### LINTING
 ## Verify final image and contents are correct.

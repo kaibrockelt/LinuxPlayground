@@ -1,0 +1,20 @@
+hi!
+Wir schauen auf ein repo bzw einen fork von https://github.com/ublue-os/image-template.
+
+Mein ziel ist es, tiefer in die materie einzutauchen und eine art "Behörden-OS" zu basteln.
+
+Und du kannst mir dabei helfen.
+
+Ich habe bereits schon SSL zertifikate installiert, aber flatpak firefox frisst es zum beispiel noch nicht.
+
+Bekommen wir das hin?
+Wir sitzen auf einem aurora linux fork. Basierend auf fedora silverblue (immutable).
+
+
+uname -a
+Linux aurora-builder 6.19.7-200.fc43.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Mar 12 15:50:03 UTC 2026 x86_64 GNU/Linux
+
+
+ziel wäre es erstmal firefox aus flatpak "out of the box" die zertifikate fressen zu lassen.
+
+du hast freie hand auf meinem system. Bis auf einer IDE ist hier nix am laufen. Git push und root sachen übernehme ich.
