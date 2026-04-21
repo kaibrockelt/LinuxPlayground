@@ -87,6 +87,12 @@ $CERTUTIL -D -n 'Caddy Local Authority' \
   ```
 - **Nächster Schritt**: Commit & push → GitHub Actions Build abwarten → `sudo bootc upgrade` → reboot → prüfen ob Service sauber läuft
 
+### 2026-04-22, ~00:07
+- Nach reboot: Service schlägt weiterhin mit EXEC 203 fehl — `/usr/local/bin/firefox-flatpak-cert-import.sh` nicht gefunden
+- **Root cause gefunden**: `/usr/local` ist ein Symlink auf `../var/usrlocal` → wird beim Boot als leeres `/var`-Mount überlagert → alles was per `COPY` dorthin geschrieben wird, ist nach dem Reboot weg
+- **Fix**: Script-Ziel von `/usr/local/bin/` auf `/usr/bin/` geändert (liegt im unveränderlichen `/usr`-Tree, wird korrekt im Image persistiert)
+- Geänderte Dateien: `Containerfile`, `files/firefox/firefox-flatpak-cert-import.service`
+
 ## Baked-in Solution (current state in image)
 
 ### Files added to repo

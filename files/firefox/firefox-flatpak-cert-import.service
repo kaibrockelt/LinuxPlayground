@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/firefox-flatpak-cert-import.sh
+ExecStart=/usr/bin/firefox-flatpak-cert-import.sh
 RemainAfterExit=yes
 
 [Install]

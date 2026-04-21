@@ -48,9 +48,9 @@ COPY files/firefox/policies.json /usr/lib64/firefox/distribution/policies.json
 
 # 4. flatpak firefox: grant cert access + import via systemd user service
 COPY files/flatpak/overrides/org.mozilla.firefox /etc/flatpak/overrides/org.mozilla.firefox
-COPY files/firefox/firefox-flatpak-cert-import.sh /usr/local/bin/firefox-flatpak-cert-import.sh
+COPY files/firefox/firefox-flatpak-cert-import.sh /usr/bin/firefox-flatpak-cert-import.sh
 COPY files/firefox/firefox-flatpak-cert-import.service /usr/lib/systemd/user/firefox-flatpak-cert-import.service
-RUN chmod +x /usr/local/bin/firefox-flatpak-cert-import.sh && \
+RUN chmod +x /usr/bin/firefox-flatpak-cert-import.sh && \
     systemctl --global enable firefox-flatpak-cert-import.service
 ### ANTIGRAVITY
 # COPY build_files/antigravity.repo /etc/yum.repos.d/antigravity.repo
