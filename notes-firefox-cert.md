@@ -155,10 +155,21 @@ COPY files/branding/horst_logo.svgz /usr/share/plasma/look-and-feel/dev.getauror
 - `/usr/lib/os-release` liegt im unveränderlichen `/usr`-Tree → kein `/var`-Symlink-Problem
 - Plymouth-Watermark hat keine feste Größenbeschränkung im Theme-Config, wird in Originalgröße gerendert
 - Das Acer-Logo beim Boot kommt vom UEFI-Firmware → nicht anfassbar
+- **Plymouth watermark.png muss `-alpha off` haben** — transparente PNGs werden von Plymouth nicht gerendert, es fällt auf das eingebaute Distro-Logo zurück
+- GRUB-Eintragstitel kommt **nicht** aus `os-release PRETTY_NAME`, sondern aus dem OCI-Label `org.opencontainers.image.title` im Containerfile
+- KDE About This System liest aus `/usr/share/kde-settings/kde-profile/default/xdg/kcm-about-distrorc`, nicht aus os-release
 
 ## Status
-- Committed & gepusht → GitHub Actions Build läuft / abwarten
-- Nach `sudo bootc upgrade` + Reboot prüfen:
+
+### 2026-04-22, ~08:42
+- `horst_logo.svgz` auf 750x750 verdoppelt (war 375x375) → KDE Splash Logo war zu klein
+- `watermark.png` war **komplett transparent** (Alpha-Kanal, alle Pixel alpha=0) → Plymouth zeigte Aurora-Fallback
+  - Fix: neu generiert mit `-alpha off -background black` → Logo jetzt sichtbar auf schwarzem Hintergrund
+- OCI-Label `org.opencontainers.image.title="Horst_OS!"` im Containerfile ergänzt → GRUB-Eintrag-Titel
+- `files/branding/kcm-about-distrorc` neu erstellt → deployed nach `/usr/share/kde-settings/kde-profile/default/xdg/kcm-about-distrorc` → überschreibt hardcoded `Name=Aurora` in KDE About This System
+- Commit `04732ec` gepusht → GitHub Actions Build abwarten → `sudo bootc upgrade` + Reboot
+- Nach Reboot prüfen:
   - GRUB zeigt "Horst_OS!" im Boot-Menü
-  - Plymouth zeigt Horst-Logo unten beim Spinner
-  - KDE Splash zeigt Horst-Logo nach Login
+  - Plymouth zeigt Horst-Logo unten beim Spinner (nicht mehr transparent)
+  - KDE Splash zeigt Horst-Logo größer nach Login
+  - KDE About This System zeigt "Horst_OS!" statt "Aurora"
