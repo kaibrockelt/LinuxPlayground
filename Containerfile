@@ -57,6 +57,18 @@ RUN chmod +x /usr/bin/firefox-flatpak-cert-import.sh && \
 # RUN dnf5 install -y antigravity && \
 #    dnf5 clean all
 
+### OS IDENTITY
+# Override os-release to change system name in GRUB and neofetch/fastfetch
+COPY files/os-release /usr/lib/os-release
+
+### BRANDING
+# Plymouth boot screen: replace watermark (128x32, shown bottom-center during spinner)
+COPY files/branding/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
+
+# KDE Plasma splash screen: replace logo in both dark and light look-and-feel themes
+COPY files/branding/horst_logo.svgz /usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+COPY files/branding/horst_logo.svgz /usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images/aurora_logo.svgz
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint

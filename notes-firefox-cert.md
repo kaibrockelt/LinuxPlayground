@@ -112,3 +112,53 @@ $CERTUTIL -D -n 'Caddy Local Authority' \
 
 ### To rollback
 Revert the Containerfile to before the "4. flatpak firefox" block and remove the three files above.
+
+---
+
+# Branding: Horst_OS!
+
+## Ziel
+Eigenes Logo in Boot-Screen (Plymouth) und KDE Splash Screen einbauen, OS-Name auf `Horst_OS!` ändern.
+
+## Dateien
+
+### `files/branding/watermark.png`
+- 400x100 PNG, generiert aus `files/horst logo.png` (1080x589) via ImageMagick
+- Ziel im Image: `/usr/share/plymouth/themes/spinner/watermark.png`
+- Erscheint unten mittig beim Boot-Spinner (Plymouth, `WatermarkVerticalAlignment=.96`)
+
+### `files/branding/horst_logo.svgz`
+- 375x375 SVGZ (PNG base64 in SVG, dann gzip), generiert aus `files/horst logo.png`
+- Ziel im Image (beide Themes):
+  - `/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz`
+  - `/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images/aurora_logo.svgz`
+- Erscheint zentriert im KDE Splash Screen nach Passwort-Eingabe
+
+### `files/os-release`
+- Überschreibt `/usr/lib/os-release` (Symlink-Ziel von `/etc/os-release`)
+- `PRETTY_NAME="Horst_OS!"` → taucht in GRUB, `bootc status`, `fastfetch`, KDE About auf
+- `DEFAULT_HOSTNAME="horst"`
+- `ID=aurora` bewusst beibehalten → Aurora-Scripts/Updates laufen weiter
+
+## Containerfile-Blöcke (in dieser Reihenfolge, vor dem lint)
+```dockerfile
+### OS IDENTITY
+COPY files/os-release /usr/lib/os-release
+
+### BRANDING
+COPY files/branding/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
+COPY files/branding/horst_logo.svgz /usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+COPY files/branding/horst_logo.svgz /usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images/aurora_logo.svgz
+```
+
+## Wichtige Pfad-Notizen
+- `/usr/lib/os-release` liegt im unveränderlichen `/usr`-Tree → kein `/var`-Symlink-Problem
+- Plymouth-Watermark hat keine feste Größenbeschränkung im Theme-Config, wird in Originalgröße gerendert
+- Das Acer-Logo beim Boot kommt vom UEFI-Firmware → nicht anfassbar
+
+## Status
+- Committed & gepusht → GitHub Actions Build läuft / abwarten
+- Nach `sudo bootc upgrade` + Reboot prüfen:
+  - GRUB zeigt "Horst_OS!" im Boot-Menü
+  - Plymouth zeigt Horst-Logo unten beim Spinner
+  - KDE Splash zeigt Horst-Logo nach Login
